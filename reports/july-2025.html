@@ -1,372 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Texas WARN Monthly Layoff Report – July YYYY</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8" />
+  <title> Monthly Total Layoffs – July YYYY</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
+      background: #f6f8fb;
+      color: #25324b;
       font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(135deg, #e8eaef 0%, #d3d7e3 100%);
-      color: #26335d;
       margin: 0;
-      padding: 0 0 64px 0;
+      padding: 0;
+      display: flex;
       min-height: 100vh;
+      align-items: center;
+      justify-content: center;
     }
-    header {
-      background: rgba(246,248,255, 0.97);
-      box-shadow: 0 7px 26px #969fbf20;
-      padding: 2.8rem 2rem 2.3rem 2rem;
+    .card {
+      background: #fff;
+      box-shadow: 0 4px 16px #d5ddf5;
+      border-radius: 18px;
+      padding: 3rem 4rem;
       text-align: center;
-      border-radius: 0 0 35px 35px;
+      min-width: 310px;
     }
     h1 {
-      font-size: 2.9rem;
-      letter-spacing: 2px;
-      margin: 0;
-      font-weight: 800;
-      color: #6771b7;
-      text-shadow: 1px 2px 12px #7a8abb12;
+      font-size: 2.1rem;
+      color: #3056b9;
+      margin-bottom: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
     }
-    .summary {
-      margin: 2.3rem auto;
-      max-width: 860px;
-      display: flex;
-      justify-content: space-between;
-      gap: 1.6rem;
-    }
-    .metric {
-      background: linear-gradient(127deg, #f7f9fc 60%, #e7e9f2 100%);
-      color: #374279;
-      border-radius: 16px;
-      padding: 2.1rem 1.6rem;
-      flex: 1 1 0px;
-      box-shadow: 0 3px 17px #767aad16;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 170px;
-      margin: 0 6px;
-      border: 1px solid #c9cee6;
-      transition: box-shadow 0.2s;
-    }
-    .metric .value {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #8da3d6;
-      margin: 0.45rem 0;
+    .number {
+      font-size: 3.6rem;
+      color: #2e5bdb;
+      font-weight: 900;
+      margin-bottom: 0.7rem;
       letter-spacing: 1px;
     }
-    .metric .desc {
-      font-size: 1.08rem;
-      opacity: 0.88;
-      color: #5f6d92;
-    }
-    main {
-      margin: 40px auto 0 auto;
-      max-width: 1250px;
-      padding: 10px 24px;
-      background: rgba(255,255,255,0.91);
-      border-radius: 28px;
-      box-shadow: 0 3px 28px #7b7f9327;
-      border: 1.5px solid #dbe1ef;
-    }
-    h2 {
-      font-size: 2.1rem;
-      color: #8285af;
-      margin-top: 0.3rem;
-      margin-bottom: 1.8rem;
-      letter-spacing: 1.2px;
-      font-weight: 700;
-      border-bottom: 2px solid #bbdfec25;
-      padding-bottom: 0.3em;
-    }
-    .chart-container {
-      margin: 2.2rem 0 2.5rem 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: space-around;
-    }
-    .chart-box {
-      background: #f7f8fc;
-      border-radius: 20px;
-      box-shadow: 0 2px 18px #e7eefc35;
-      padding: 2rem 1.4rem;
-      min-width: 320px;
-      flex: 1 1 340px;
-      text-align: center;
-    }
-    .chart-title {
+    .label {
+      font-size: 1.17rem;
+      color: #7e8aad;
       font-weight: 600;
-      letter-spacing: 0.8px;
-      color: #758fbb;
-      margin: 0.5rem 0 1rem 0;
-      text-align:center;
-      font-size: 1.15rem;
+      letter-spacing: 0.06em;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #f7f9fc;
-      margin-bottom: 2.5rem;
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 1px 10px #cfd7f22c;
-    }
-    th, td {
-      padding: 0.89rem;
-      border-bottom: 1px solid #e1e8f0;
-      text-align: left;
-      font-size: 1.04rem;
-    }
-    th {
-      background: #e8edfa;
-      color: #6271ab;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-    }
-    tr:nth-child(even) {
-      background: #eff1fa;
-    }
-    .highlight {
-      color: #6d7edb;
-      font-weight: bold;
-      background: linear-gradient(87deg,#dfe4fc 0%,#b6c7ef 100%);
-      border-radius: 12px;
-      padding: 0.14em 0.5em;
-    }
-    .footer {
-      text-align: center;
-      margin: 66px 0 0 0;
-      color: #8491bf;
-      font-size: 1rem;
+    .date {
+      margin-top: 2rem;
+      font-size: 0.97rem;
+      color: #b1badc;
       font-family: monospace;
-      border-top: 1px solid #c8d0e7;
-      padding-top: 2rem;
-      opacity: 0.8;
-    }
-    @media (max-width:900px) {
-      .summary {flex-direction: column;}
-      main {padding: 6px;}
-      .chart-container {flex-direction: column;}
-    }
-    @media (max-width:600px) {
-      header {padding: 2rem 0.7rem;}
-      main {padding: 4px;}
-      h1 {font-size: 1.45rem;}
-      h2 {font-size: 1.09rem;}
-      .metric {padding: 1.1rem;}
-      th, td {font-size: 0.92rem;}
-      .chart-box {padding: 1.1rem 3px;}
+      letter-spacing: 0.06em;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Texas WARN Monthly Layoff Report</h1>
-    <div style="font-size:1.23rem;color:#8ea1ce;margin-top:0.8rem;">For July YYYY</div>
-  </header>
-
-  <div class="summary">
-    <div class="metric">
-      <div class="desc">Total Employees Laid Off</div>
-      <div class="value">646</div>
+  <div class="card">
+    <h1>Texas WARN Layoffs</h1>
+    <div class="number">
+      929
     </div>
-    <div class="metric">
-      <div class="desc">Companies Reporting</div>
-      <div class="value">undefined</div>
+    <div class="label">
+      Employees Laid Off <br>in July 2025
     </div>
-    <div class="metric">
-      <div class="desc">Counties Impacted</div>
-      <div class="value">undefined</div>
+    <div class="date">
+      Updated: 2025-07-Jul 17, 2025
     </div>
   </div>
-
-  <main>
-    <!-- CHARTS -->
-    <div class="chart-container">
-      <div class="chart-box">
-        <div class="chart-title">Layoffs by County</div>
-        <canvas id="countyChart" height="210"></canvas>
-      </div>
-      <div class="chart-box">
-        <div class="chart-title">Top 10 Companies by Layoffs</div>
-        <canvas id="companyChart" height="210"></canvas>
-      </div>
-      <div class="chart-box">
-        <div class="chart-title">Layoff Trends (Last 6 Months)</div>
-        <canvas id="trendChart" height="210"></canvas>
-      </div>
-    </div>
-
-    <!-- TOP 10 COMPANIES -->
-    <section>
-      <h2>Top 10 Companies by Layoffs</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Company Name</th>
-            <th>Employees Laid Off</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in $items("Top 10 Companies") %}
-          <tr>
-            <td>NaN</td>
-            <td class="highlight">undefined</td>
-            <td>undefined</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </section>
-
-    <!-- LAYOFFS BY COUNTY -->
-    <section>
-      <h2>Layoffs by County</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>County</th>
-            <th>Total Laid Off</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in $items("County Summary") %}
-          <tr>
-            <td>undefined</td>
-            <td>undefined</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </section>
-
-    <!-- FULL DETAIL LIST -->
-    <section>
-      <h2>All Layoff Notices This Month</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Company</th>
-            <th>Employees</th>
-            <th>City</th>
-            <th>County</th>
-            <th>Notice Date</th>
-            <th>Layoff Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in $items("Layoff Details") %}
-          <tr>
-            <td>undefined</td>
-            <td>undefined</td>
-            <td>undefined</td>
-            <td>undefined</td>
-            <td>undefined</td>
-            <td>undefined</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </section>
-  </main>
-  <div class="footer">
-    Texas WARN Monthly Layoff Report generated automatically via n8n<br>
-    Data Source: Texas Workforce Commission WARN Act Listing &bull; YYYY-07-Jul 16, 2025
-  </div>
-  <script>
-    // Prepare chart data via n8n-HTML node variables
-    // Chart 1: Layoffs by County
-    const countyData = {% raw %}{% $items("County Summary") | json %}{% endraw %};
-    const countyLabels = countyData.map(i => i.json.county);
-    const countyLayoffs = countyData.map(i => i.json.layoffs);
-
-    // Chart 2: Top 10 Companies
-    const companyData = {% raw %}{% $items("Top 10 Companies") | json %}{% endraw %};
-    const companyLabels = companyData.map(i => i.json.name);
-    const companyLayoffs = companyData.map(i => i.json.layoffs);
-
-    // Chart 3: Layoff Trends (Last 6 months)
-    const trendData = {% raw %}{% $items("Layoff Trend") | json %}{% endraw %} || [];
-    const trendLabels = trendData.map(i => i.json.month);
-    const trendLayoffs = trendData.map(i => i.json.total_layoffs);
-
-    // County Bar Chart
-    new Chart(document.getElementById('countyChart').getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: countyLabels,
-        datasets: [{
-          label: 'Laid Off',
-          backgroundColor: '#8da3d6ab',
-          borderColor: '#7189c5',
-          borderWidth: 2,
-          data: countyLayoffs
-        }]
-      },
-      options: {
-        plugins: {legend: {display: false}},
-        scales: {
-          x: {grid:{color:'#ecf1fd',borderColor:'#dbe1ec'},ticks:{color:'#6271ab',font:{weight:'bold'}}},
-          y: {beginAtZero:true,grid:{color:'#ecf1fd'},ticks:{color:'#6271ab'}}
-        }
-      }
-    });
-
-    // Top 10 Companies Horizontal Bar
-    new Chart(document.getElementById('companyChart').getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: companyLabels,
-        datasets: [{
-          label: 'Laid Off',
-          backgroundColor: '#b5bbdfbb',
-          borderColor: '#847dbd',
-          borderWidth: 2,
-          data: companyLayoffs
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        plugins: {legend: {display: false}},
-        scales: {
-          x: {beginAtZero:true,grid:{color:'#e9eefb'},ticks:{color:'#7d88a1'}},
-          y: {grid:{color:'#e9eefb'},ticks:{color:'#6d7edb',font:{weight:'bold'}}}
-        }
-      }
-    });
-
-    // Layoff Trends Line Chart
-    new Chart(document.getElementById('trendChart').getContext('2d'), {
-      type: 'line',
-      data: {
-        labels: trendLabels,
-        datasets: [{
-          label: 'Total Laid Off',
-          data: trendLayoffs,
-          borderColor: '#8da3d6',
-          backgroundColor: 'rgba(245,196,108,0.09)',
-          pointBackgroundColor: '#aaadef',
-          borderWidth: 4,
-          tension: 0.35,
-          pointRadius: 4,
-          fill: true,
-        }]
-      },
-      options: {
-        plugins: {legend: {display: false}},
-        scales: {
-          x: {grid:{color:'#ecf1fd'},ticks:{color:'#6771b7'}},
-          y: {beginAtZero:true,grid:{color:'#ecf1fd'},ticks:{color:'#7587a9'}}
-        }
-      }
-    });
-  </script>
 </body>
 </html>
